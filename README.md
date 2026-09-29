@@ -1,160 +1,504 @@
-# ChronoGuard
+<div align="center">
 
-**Your model should only know what the world knew.**
+# ⚡ ChronoGuard
 
-ChronoGuard audits machine-learning datasets for *temporal leakage*: feature values that were not yet
-available when a prediction was made. A chargeback flag recorded a week after the transaction, a
-settlement status finalized two days later, a macro indicator revised after the fact. Leakage like this
-inflates offline metrics and silently fails in production.
+### **AI Reliability Engineer with Hindsight Memory**
 
-ChronoGuard:
+**Detect → Remember → Explain → Learn**
 
-1. **Detects leakage from timestamps.** A feature value leaks when `available_time > prediction_time`.
-   No hand-written labels are used.
-2. **Scores the risk** of every feature and the dataset (0–100) with a documented formula.
-3. **Remembers incidents** in a vector memory, so a leak that returns under a new column name
-   (`cb_resolution_flag` ≈ `chargeback_filed`) is recognised and scored higher.
-4. **Replays the model** with and without the leaked features on a time-ordered split and reports the
-   measured drop in ROC-AUC, accuracy, precision, recall and F1.
+> **ChronoGuard detects data leakage and reliability risks in AI/ML decision systems, then uses Hindsight memory to connect current failures with previously observed incidents.**
 
-Every number, chart, score and explanation in the UI is computed by the backend from the uploaded data.
+[![Live Demo](https://img.shields.io/badge/Live-Demo-success?style=for-the-badge)](https://chronoguard-2.onrender.com)
+[![Backend API](https://img.shields.io/badge/API-Live-blue?style=for-the-badge)](https://chronoguard-1.onrender.com/api/health)
+[![Hindsight](https://img.shields.io/badge/Memory-Hindsight-purple?style=for-the-badge)](https://hindsight.vectorize.io/)
+![AI](https://img.shields.io/badge/AI-Reliability-7c3aed?style=for-the-badge)
+![Hackathon](https://img.shields.io/badge/Built_for-Hackathon-ff6b35?style=for-the-badge)
 
-## Architecture
+<br/>
 
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:7c3aed,100:06b6d4&height=120&section=header&text=Reliability%20with%20Memory&fontSize=32&fontColor=ffffff&animation=fadeIn" width="100%"/>
+
+</div>
+
+---
+
+## ✨ The Idea in One Line
+
+<div align="center">
+
+### 🧠 **Give AI reliability systems a memory of what went wrong before.**
+
+</div>
+
+---
+
+## 🎯 Problem
+
+AI/ML systems can produce impressive results while quietly depending on information that would **not be available at real prediction time**.
+
+This creates problems such as:
+
+- 🚨 **Data leakage**
+- ⏱️ **Future-information leakage**
+- 📉 **Unreliable model evaluation**
+- 🔍 Difficult root-cause analysis
+- 🧠 Loss of knowledge from previous incidents
+
+Traditional validation can identify a suspicious feature, but the reliability team still needs to understand:
+
+**“Have we seen this kind of failure before?”**
+
+---
+
+## 💡 Solution
+
+**ChronoGuard** is an AI reliability system designed to detect suspicious features and investigate whether they contain information that would only become available after the prediction point.
+
+Instead of treating every incident as a new problem, ChronoGuard uses **Hindsight memory** to connect the current finding with previous reliability incidents.
+
+### The core idea
+
+**Detect → Remember → Recall → Explain → Learn**
+
+---
+
+## 🧠 Why Hindsight Memory?
+
+A reliability system should not only detect failures.
+
+It should also **remember what happened before**.
+
+ChronoGuard stores important reliability incidents and retrieves relevant historical evidence when a new audit is performed.
+
+This enables the system to answer questions such as:
+
+- What similar leakage was detected previously?
+- Which feature caused the earlier problem?
+- How similar is the current incident?
+- What evidence should an engineer investigate?
+- What patterns are repeating across audits?
+
+### 🔄 Retain → Recall → Reflect
+
+| Memory Stage | ChronoGuard |
+|---|---|
+| 📝 **Retain** | Store important reliability incidents |
+| 🔎 **Recall** | Retrieve relevant historical incidents |
+| 🧠 **Reflect** | Use previous evidence to explain the current finding |
+
+---
+
+## 🏗️ Architecture
+
+```mermaid
+flowchart LR
+    A[Dataset / AI Decision Data] --> B[ChronoGuard API]
+    B --> C[Feature & Temporal Analysis]
+    C --> D[Leakage Detection]
+    D --> E[Risk Assessment]
+    E --> F[Hindsight Memory]
+
+    F --> G[Recall Similar Incidents]
+    G --> H[Memory Evidence]
+    H --> I[Reliability Explanation]
+
+    I --> J[ChronoGuard Dashboard]
+    J --> K[Audit Intelligence]
+    J --> L[Incident Timeline]
+    J --> M[Memory]
 ```
-React + TypeScript + Vite (Tailwind, Framer Motion, Recharts)
-        │  REST (JSON)
-FastAPI ├─ engine/parsing.py           CSV → normalized observations (long or wide layout)
-        ├─ engine/leakage_detector.py  available_time > prediction_time, per-feature stats, timeline
-        ├─ engine/risk_scoring.py      0–100 score: timestamp evidence + memory similarity
-        ├─ engine/replay.py            baseline vs leak-free model, drop-one ablation
-        ├─ memory/                     incident store + vector search, explanations
-        │     ├─ local hashed vectors (offline, always available)
-        │     ├─ Azure OpenAI embeddings + chat explanations (optional)
-        │     └─ Hindsight adapter (optional)
-        └─ database/ (SQLAlchemy)      SQLite by default; any SQLAlchemy URL (e.g. Azure PostgreSQL)
+
+---
+
+## 🔍 How ChronoGuard Works
+
+### 1️⃣ Analyze
+
+ChronoGuard receives decision data and examines the available features.
+
+### 2️⃣ Detect
+
+The system looks for suspicious relationships between features, outcomes, and the prediction timeline.
+
+### 3️⃣ Identify Leakage
+
+Features that contain information unavailable at prediction time can be flagged as potential leakage.
+
+### 4️⃣ Assess Risk
+
+The detected issue is converted into a reliability risk assessment.
+
+### 5️⃣ Recall Memory
+
+ChronoGuard searches Hindsight for previously stored reliability incidents that are relevant to the current finding.
+
+### 6️⃣ Explain
+
+Historical memory provides additional evidence that helps engineers understand the current incident.
+
+### 7️⃣ Retain
+
+Important incidents can become part of the system's reliability memory for future investigations.
+
+---
+
+## 📊 Hackathon Demo Results
+
+The current ChronoGuard demo demonstrates the reliability workflow using a predictive-maintenance dataset.
+
+### ⚡ Current Demo
+
+| Metric | Result |
+|---|---:|
+| Decisions analyzed | **500** |
+| Features inspected | **6** |
+| Leaked features | **1 / 6** |
+| Affected decisions | **500 / 500** |
+| Affected rate | **100%** |
+| Risk score | **83 / 100** |
+| Stored memory incidents | **6** |
+| Memory system | **Hindsight enabled** |
+
+### 🚨 Detected Issue
+
+The feature:
+
+```text
+maintenance_failure_confirmation
 ```
 
-The database holds deterministic facts: datasets, audits, findings, replays and incidents with their
-vectors. The optional AI services only add semantic similarity and prose. They never produce the numbers.
+was identified as a suspicious post-outcome signal.
 
-## Quick start
+The demo shows how ChronoGuard can connect the current reliability finding with previous incidents through memory.
 
-**Backend** (Python 3.11+):
+---
+
+## ⚡ Key Features
+
+### 🔎 AI Reliability Audit
+Analyze decision datasets for suspicious feature relationships and potential leakage.
+
+### 🚨 Leakage Detection
+Identify features that may contain information unavailable at prediction time.
+
+### 📊 Risk Assessment
+Convert detected reliability problems into an understandable risk score.
+
+### 🧠 Hindsight Memory
+Store and retrieve historical reliability incidents.
+
+### 🔗 Memory Evidence
+Connect current findings with previous incidents that provide relevant evidence.
+
+### 🕒 Incident Timeline
+Present reliability events as a timeline so engineers can understand how incidents evolved.
+
+### 🧩 Audit Intelligence
+Bring detection, evidence, risk, and historical memory together in one workflow.
+
+---
+
+## 🖥️ Product Flow
+
+```text
+Dataset
+   ↓
+Audit
+   ↓
+Feature Analysis
+   ↓
+Leakage Detection
+   ↓
+Risk Assessment
+   ↓
+Hindsight Recall
+   ↓
+Historical Evidence
+   ↓
+Reliability Explanation
+   ↓
+Retain New Incident
+```
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+
+### Backend
+- Python
+- FastAPI
+- Uvicorn
+- Pydantic
+- SQLAlchemy
+
+### Data & ML
+- Pandas
+- NumPy
+- Scikit-learn
+
+### AI & Memory
+- Hindsight Memory
+- OpenAI integration
+- Local vector-based support
+
+### Deployment
+- Render
+
+---
+
+## 🚀 Quick Start
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/Lokesh1430/chronoguard.git
+cd chronoguard
+```
+
+### 2. Start the backend
 
 ```bash
 cd backend
-python -m venv .venv
-source .venv/bin/activate            # Windows: .venv\Scripts\activate
-pip install -r requirements-dev.txt
-uvicorn main:app --reload            # http://127.0.0.1:8000/docs
+pip install -r requirements.txt
+uvicorn main:app --reload
 ```
 
-On first start the three bundled sample datasets are audited and replayed through the real engine,
-so the dashboard is not empty. Set `CHRONOGUARD_SEED_SAMPLES_ON_STARTUP=false` to disable this.
+Backend:
 
-**Frontend** (Node 20+):
+```text
+http://localhost:8000
+```
+
+Health check:
+
+```text
+http://localhost:8000/api/health
+```
+
+### 3. Start the frontend
 
 ```bash
 cd frontend
 npm install
-npm run dev                          # http://localhost:5173
+npm run dev
 ```
 
-Set `VITE_API_URL` (see `frontend/.env.example`) if the API is not on `http://127.0.0.1:8000`.
+Frontend:
 
-**Checks:**
-
-```bash
-cd backend && pytest && ruff check . && ruff format --check .
-cd frontend && npm run build && npm run lint
+```text
+http://localhost:5173
 ```
 
-## Dataset format
+---
 
-Two CSV layouts are detected automatically. Common column names are recognised
-(`prediction_time`, `decision_time`, `scored_at`, `available_time`, `known_at`, `target`, `label`, `is_fraud`, …).
+## 🌐 Live Deployment
 
-**Long:** one row per (decision, feature):
+### Frontend
 
-```csv
-decision_id,feature_name,feature_value,prediction_time,available_time,target
-TXN-001,chargeback_filed,1,2026-01-10T10:00:00Z,2026-01-17T15:00:00Z,1
-TXN-001,transaction_amount,84.20,2026-01-10T10:00:00Z,2026-01-10T10:00:00Z,1
-```
+https://chronoguard-2.onrender.com
 
-**Wide:** one row per decision, with a `<feature>_available_time` column per feature:
+### Backend
 
-```csv
-transaction_id,scored_at,is_fraud,amount,amount_available_time,cb_flag,cb_flag_available_time
-TX-1,2026-01-10T10:00:00Z,1,84.20,2026-01-10T10:00:00Z,1,2026-01-17T15:00:00Z
-```
+https://chronoguard-1.onrender.com
 
-- Timestamps are ISO 8601. Times without a timezone are treated as UTC.
-- A `target` column (binary) enables the replay. Feature values enable model training.
-- Verdict-like columns (`expected_status`, `available_at_decision_time`, `risk_level`, …) are reported
-  as ignored and never used as evidence.
+### API Health
 
-## How the risk score works
+https://chronoguard-1.onrender.com/api/health
 
-```
-feature score  = 100 × √(leak rate) × severity(median delay)  +  memory boost
-severity       = 0.5 + 0.5 × min(1, log(1 + median delay h) / log(1 + 720))
-memory boost   = up to +15 × similarity when a past incident matches
-                 (a feature with no timestamps + a memory match alone → up to 45, "review")
-dataset score  = 0.7 × max(feature scores) + 0.3 × mean(risky feature scores)
-bands          = low < 25 ≤ medium < 60 ≤ high
-```
+---
 
-A memory match is a past incident with cosine similarity ≥ 0.50 (local vectors) or ≥ 0.60 (Azure
-embeddings). The same dataset never matches its own incidents.
+## 🔌 Key API
 
-## Replay
-
-- Decisions are sorted by prediction time. The model trains on the earliest 70% and tests on the latest 30%.
-- Two identical `HistGradientBoostingClassifier` models are trained: one on all features, one with the
-  leaked features removed.
-- A drop-one ablation measures each leaked feature's own contribution.
-- The replay needs a binary target, both classes in each period, and at least 200 labelled decisions.
-  Otherwise the API explains why no replay was run.
-
-On the bundled synthetic `fraud_detection_q1.csv`, the replay measures ROC-AUC 0.985 with all features
-versus 0.676 without the leaked ones.
-
-## Optional integrations
-
-All are configured in `backend/.env` (see `backend/.env.example`). Without them ChronoGuard runs fully offline.
-
-| Integration | Enables | Settings |
-|---|---|---|
-| Azure OpenAI | Semantic embeddings for memory; written audit explanations grounded in the measured facts | `CHRONOGUARD_AZURE_OPENAI_*` |
-| Hindsight | Long-term organizational recall alongside the SQL incident store | `CHRONOGUARD_HINDSIGHT_*` + `pip install hindsight-client` |
-| PostgreSQL | Shared, durable storage (e.g. Azure Database for PostgreSQL) | `CHRONOGUARD_DATABASE_URL` + `pip install psycopg[binary]` |
-
-The active providers are shown in the app's sidebar and at `GET /api/health`.
-
-## Sample data
-
-`backend/data/samples/` contains three seeded **synthetic** datasets (regenerate with
-`python -m scripts.generate_samples`):
-
-| File | Story |
+| Endpoint | Purpose |
 |---|---|
-| `fraud_detection_q1.csv` | Long layout. Chargeback and settlement outcomes were joined into the training table. |
-| `credit_default_clean.csv` | Built correctly from point-in-time data. Expect a low risk score and no replay gap. |
-| `fraud_detection_q2_wide.csv` | Wide layout, next model iteration, leaky columns renamed. Memory recognises the recurring leak. |
+| `GET /api/health` | Check backend health |
+| `POST /api/audits` | Create an audit |
+| `GET /api/audits/{id}` | Retrieve audit information |
+| `GET /api/audits/{id}/replay` | Replay audit information |
+| `POST /api/memory/search` | Search reliability memory |
+| `GET /api/memory/graph` | Retrieve memory relationships |
+| `GET /api/memory/timeline` | Retrieve memory timeline |
+| `GET /api/hindsight/status` | Check Hindsight status |
+| `POST /api/hindsight/recall` | Recall relevant memory |
+| `POST /api/hindsight/reflect` | Generate memory-based reflection |
 
-## API
+> API availability can depend on the deployed backend version.
 
-| Method | Path | Purpose |
-|---|---|---|
-| GET | `/api/health` | Database status and active memory, explanation and Hindsight providers |
-| POST | `/api/datasets` | Upload a CSV (multipart `file`) and get the full audit |
-| GET | `/api/samples` · POST `/api/samples/{name}/audit` | Bundled samples |
-| GET | `/api/audits` · `/api/audits/{id}` | Audit summaries and full reports |
-| GET | `/api/audits/{id}/affected` | Paginated affected decision IDs |
-| POST / GET | `/api/audits/{id}/replay` | Run or fetch the model replay |
-| GET | `/api/memory/incidents` · POST `/api/memory/search` | Incident memory |
-| GET | `/api/dashboard` | Aggregates across all audits |
+---
 
-Interactive docs: `http://127.0.0.1:8000/docs`.
+## 🧠 Memory Design
+
+ChronoGuard treats reliability incidents as reusable knowledge.
+
+A stored incident can contain information such as:
+
+```text
+Incident
+├── Dataset / audit context
+├── Suspicious feature
+├── Leakage evidence
+├── Risk information
+├── Temporal relationship
+└── Historical similarity
+```
+
+When a new audit is performed:
+
+```text
+Current Incident
+      ↓
+Hindsight Recall
+      ↓
+Similar Historical Evidence
+      ↓
+Contextual Explanation
+```
+
+This transforms memory from simple storage into a reliability feedback loop.
+
+---
+
+## ⚠️ Current Limitations
+
+- The current demo uses a lightweight storage setup suitable for the hackathon environment.
+- Reliability findings depend on the quality and structure of the supplied data.
+- Automated leakage detection should be treated as an engineering signal requiring human validation.
+- Production deployment would require stronger persistence, authentication, monitoring, and operational controls.
+
+---
+
+## 🗺️ Future Improvements
+
+- 🔐 Production-grade authentication and access control
+- 🗄️ Persistent production database
+- 📈 More advanced temporal leakage detection
+- 🤖 More automated root-cause analysis
+- 🧠 Deeper historical incident reasoning
+- 📊 Expanded reliability analytics
+- 🔔 Automated reliability alerts
+- 🔄 Continuous model/data monitoring
+
+---
+
+## 🏆 Hackathon Highlights
+
+<div align="center">
+
+| 🔎 Detect | 🧠 Remember | 💡 Explain | 🔄 Learn |
+|:---:|:---:|:---:|:---:|
+| Find reliability risks | Recall past incidents | Connect evidence | Improve future audits |
+
+</div>
+
+### ⭐ What makes ChronoGuard different?
+
+**Traditional approach**
+
+```text
+Detect a problem
+      ↓
+Fix the problem
+      ↓
+Move on
+```
+
+**ChronoGuard approach**
+
+```text
+Detect
+  ↓
+Remember
+  ↓
+Recall
+  ↓
+Compare
+  ↓
+Explain
+  ↓
+Learn
+  ↓
+Improve future reliability
+```
+
+### 🚀 Core Value
+
+> **ChronoGuard gives AI reliability systems a memory of what went wrong before.**
+
+It combines **data-leakage detection, risk assessment, and Hindsight-powered historical reasoning** into one reliability workflow.
+
+---
+
+## 🎬 The ChronoGuard Loop
+
+<div align="center">
+
+<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=22&pause=900&color=7C3AED&center=true&vCenter=true&width=850&lines=Detect+the+signal.;Recall+the+past.;Understand+the+risk.;Learn+from+the+incident.;Build+more+reliable+AI." alt="ChronoGuard animated typing banner"/>
+
+</div>
+
+```text
+                 ┌───────────────────┐
+                 │   AI / ML Data    │
+                 └─────────┬─────────┘
+                           ↓
+                  🔎 DETECT LEAKAGE
+                           ↓
+                    🚨 RISK SIGNAL
+                           ↓
+                   🧠 RECALL MEMORY
+                           ↓
+                    🔗 PAST EVIDENCE
+                           ↓
+                    💡 EXPLAIN RISK
+                           ↓
+                    📝 RETAIN INCIDENT
+                           ↺
+                  Continuous Learning
+```
+
+---
+
+## 📌 Project Summary
+
+**ChronoGuard** is an AI Reliability Engineer with Hindsight Memory.
+
+It is designed to help engineers:
+
+- 🔎 Detect potential data leakage
+- 🚨 Identify reliability risks
+- 🧠 Remember previous incidents
+- 🔗 Recall similar historical evidence
+- 💡 Understand why a current finding matters
+- 🔄 Build a continuous reliability learning loop
+
+---
+
+## 🔗 Links
+
+- 🌐 **Live Demo:** https://chronoguard-2.onrender.com
+- 💻 **GitHub:** https://github.com/Lokesh1430/chronoguard
+- ❤️ **Hindsight:** https://hindsight.vectorize.io/
+
+<div align="center">
+
+`⚡ AI Reliability` &nbsp;•&nbsp; `🧠 Hindsight Memory` &nbsp;•&nbsp; `🔎 Leakage Detection` &nbsp;•&nbsp; `🚨 Risk Analysis`
+
+</div>
+
+---
+
+<div align="center">
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:06b6d4,100:7c3aed&height=100&section=footer&animation=fadeIn" width="100%"/>
+
+### 🚀 Built for the Hackathon
+
+**ChronoGuard — Detect. Remember. Explain. Learn.**
+
+</div>
