@@ -303,6 +303,8 @@ http://localhost:5173
 
 https://chronoguard-2.onrender.com
 
+https://chronoguard-ochre.vercel.app/
+
 ### Backend
 
 https://chronoguard-1.onrender.com
@@ -481,7 +483,7 @@ It is designed to help engineers:
 
 ## 🔗 Links
 
-- 🌐 **Live Demo:** https://chronoguard-2.onrender.com
+- 🌐 **Live Demo:** https://chronoguard-ochre.vercel.app/
 - 💻 **GitHub:** https://github.com/Lokesh1430/chronoguard
 - ❤️ **Hindsight:** https://hindsight.vectorize.io/
 
