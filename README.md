@@ -8,7 +8,7 @@
 
 > **ChronoGuard detects data leakage and reliability risks in AI/ML decision systems, then uses Hindsight memory to connect current failures with previously observed incidents.**
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-success?style=for-the-badge)](https://chronoguard-2.onrender.com)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-success?style=for-the-badge)](https://chronoguard-ochre.vercel.app/)
 [![Backend API](https://img.shields.io/badge/API-Live-blue?style=for-the-badge)](https://chronoguard-1.onrender.com/api/health)
 [![Hindsight](https://img.shields.io/badge/Memory-Hindsight-purple?style=for-the-badge)](https://hindsight.vectorize.io/)
 ![AI](https://img.shields.io/badge/AI-Reliability-7c3aed?style=for-the-badge)
