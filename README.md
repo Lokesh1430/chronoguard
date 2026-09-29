@@ -8,11 +8,6 @@
 
 > **ChronoGuard detects data leakage and reliability risks in AI/ML decision systems, then uses Hindsight memory to connect current failures with previously observed incidents.**
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-success?style=for-the-badge)](https://chronoguard-ochre.vercel.app/)
-[![Backend API](https://img.shields.io/badge/API-Live-blue?style=for-the-badge)](https://chronoguard-1.onrender.com/api/health)
-[![Hindsight](https://img.shields.io/badge/Memory-Hindsight-purple?style=for-the-badge)](https://hindsight.vectorize.io/)
-![AI](https://img.shields.io/badge/AI-Reliability-7c3aed?style=for-the-badge)
-![Hackathon](https://img.shields.io/badge/Built_for-Hackathon-ff6b35?style=for-the-badge)
 
 <br/>
 
@@ -368,7 +363,6 @@ This transforms memory from simple storage into a reliability feedback loop.
 
 ## ⚠️ Current Limitations
 
-- The current demo uses a lightweight storage setup suitable for the hackathon environment.
 - Reliability findings depend on the quality and structure of the supplied data.
 - Automated leakage detection should be treated as an engineering signal requiring human validation.
 - Production deployment would require stronger persistence, authentication, monitoring, and operational controls.
@@ -388,7 +382,7 @@ This transforms memory from simple storage into a reliability feedback loop.
 
 ---
 
-## 🏆 Hackathon Highlights
+## 🏆 Highlights
 
 <div align="center">
 
@@ -499,8 +493,5 @@ It is designed to help engineers:
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:06b6d4,100:7c3aed&height=100&section=footer&animation=fadeIn" width="100%"/>
 
-### 🚀 Built for the Hackathon
-
-**ChronoGuard — Detect. Remember. Explain. Learn.**
 
 </div>
