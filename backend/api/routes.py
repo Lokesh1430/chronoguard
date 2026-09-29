@@ -46,7 +46,7 @@ def health(db: Session = Depends(get_db)):
         database=database,
         embedding_provider=store.provider,
         explanation_provider=Explainer().provider,
-        hindsight="enabled" if hs.configured else ("error" if hs.error else "disabled"),
+        hindsight="Connected" if hs.configured else ("error" if hs.error else "disabled"),
     )
 
 
