@@ -137,7 +137,7 @@ Important incidents can become part of the system's reliability memory for futur
 
 ---
 
-## 📊 Hackathon Demo Results
+## 📊 Demo Results
 
 The current ChronoGuard demo demonstrates the reliability workflow using a predictive-maintenance dataset.
 
